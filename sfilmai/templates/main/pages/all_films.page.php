@@ -1,4 +1,4 @@
-<h2>visi filmai</h2>
+<h2>Visi filmai</h2>
 <?php
 $dns= "mysql:host=$host;dbname=$db";
 try{
@@ -32,6 +32,7 @@ try{
     <td><?=$filmas['rezisierius']; ?></td>
     <td><?=$filmas['metai']; ?></td>
     <td><?=$filmas['zanroPavadinimas']; ?></td>
+
 
     </tr>
     <?php endforeach; ?>
