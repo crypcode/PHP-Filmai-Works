@@ -1,3 +1,3 @@
 <?php
 $siteName = "Filmai";
-const  activeTemplate = "main";
+const  activeTemplate = "main/";
