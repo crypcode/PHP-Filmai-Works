@@ -22,6 +22,12 @@ if (isset($_GET['page'])){
         case 'trinti-filma':
             include ('templates/'.activeTemplate.'/pages/delete_film.page.php');
             break;
+        case 'zanru-valdymas':
+            include ('templates/'.activeTemplate.'/pages/manage_genres.php');
+            break;
+        case 'trinti-zanra':
+            include ('templates/'.activeTemplate.'/pages/delete_genre.php');
+            break;
         default:
     }
 } else {

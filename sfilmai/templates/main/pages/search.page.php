@@ -1,29 +1,32 @@
 <?php
-$dns= "mysql:host=$host;dbname=$db";
-$rezultatai=[];
-try{
-    $conn = new PDO($dns, $username, $password, $options);
-    if($conn){
-        $stmt = $conn->query("SELECT pavadinimas FROM filmaitable ");
-        $sarasas = $stmt->fetchAll();
-        if (isset($_POST['search'])){
-            $uzklausa = $conn->prepare('SELECT zanrai.pavadinimas AS kategorija, filmaitable.pavadinimas, 
-                filmaitable.rezisierius, filmaitable.metai, filmaitable.imdb, filmaitable.aprasymas FROM filmaitable
-                INNER JOIN zanrai
-                ON filmaitable.genre_id = zanrai.id
-                WHERE filmaitable.pavadinimas LIKE ?');
-            $input = $_POST['pavadinimas'];
+//$dns= "mysql:host=$host;dbname=$db";
+//$rezultatai=[];
+//try{
+//    $conn = new PDO($dns, $username, $password, $options);
+//    if($conn){
+//        $stmt = $conn->query("SELECT pavadinimas FROM filmaitable ");
+//        $sarasas = $stmt->fetchAll();
+//        if (isset($_POST['search'])){
+//            $uzklausa = $conn->prepare('SELECT zanrai.pavadinimas AS kategorija, filmaitable.pavadinimas,
+//                filmaitable.rezisierius, filmaitable.metai, filmaitable.imdb, filmaitable.aprasymas FROM filmaitable
+//                INNER JOIN zanrai
+//                ON filmaitable.genre_id = zanrai.id
+//                WHERE filmaitable.pavadinimas LIKE ?');
+//            $input = $_POST['pavadinimas'];
+//
+//            $uzklausa->bindValue(1,"%$input%", PDO::PARAM_STR);
+//            $uzklausa->execute();
+//            $rezultatai = $uzklausa->fetchAll();
+//
+//        }
+//
+//    }
+//} catch (PDOException $e) {
+//    echo $e->getMessage();
+//}
+$sarasas = searchas();
 
-            $uzklausa->bindValue(1,"%$input%", PDO::PARAM_STR);
-            $uzklausa->execute();
-            $rezultatai = $uzklausa->fetchAll();
-
-        }
-
-    }
-} catch (PDOException $e) {
-    echo $e->getMessage();
-} ?>
+?>
 <div class="container m-5">
     <form method="post">
         <div class="form-group">
@@ -31,7 +34,6 @@ try{
             <input type="text" class="form-control" id="paieskai" name="pavadinimas" list="pavadinimas" aria-describedby="emailHelp">
             <datalist id="pavadinimas">
                 <?php foreach ($sarasas as $irasas):?>
-                    <?php var_dump($irasas)?>
                     <option value="<?=$irasas['pavadinimas'];?>"></option>
                 <?php endforeach;?>
             </datalist>
@@ -52,6 +54,7 @@ try{
             </tr>
             </thead>
             <tr>
+                <?php $rezultatai = searchas2();?>
                 <?php
                 foreach ($rezultatai as $irasas): ?>
                 <td><?=$irasas['pavadinimas']; ?></td>
